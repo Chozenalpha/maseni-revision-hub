@@ -1,0 +1,17 @@
+Future<String> summarizeText(String text) async {
+  final response = await http.post(
+    Uri.parse("https://api.openai.com/v1/chat/completions"),
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: jsonEncode({
+      "model": "gpt-4o-mini",
+      "messages": [
+        {"role": "user", "content": "Summarize: $text"}
+      ]
+    }),
+  );
+
+  return jsonDecode(response.body)["choices"][0]["message"]["content"];
+}
