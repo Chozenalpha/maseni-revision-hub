@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'upload.dart';
+import 'admin.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int index = 0;
+
+  final pages = [
+    Center(child: Text("Materials Page")),
+    UploadPage(),
+    AdminPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Maseno Hub")),
+      body: pages[index],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        onTap: (i) => setState(() => index = i),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Materials"),
+          BottomNavigationBarItem(icon: Icon(Icons.upload), label: "Upload"),
+          BottomNavigationBarItem(icon: Icon(Icons.admin_panel_settings), label: "Admin"),
+        ],
+      ),
+    );
+  }
+}
