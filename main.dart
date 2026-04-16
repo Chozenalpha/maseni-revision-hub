@@ -14,8 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Maseno Revision Hub",
-      theme: ThemeData.dark(),
-      home: LoginScreen(),
-    );
+      theme: ThemeData(
+  brightness: Brightness.dark,
+  primaryColor: Color(0xFF06B6D4),
+  scaffoldBackgroundColor: Color(0xFF070A12),
+  fontFamily: 'Poppins',
+),
   }
 }
