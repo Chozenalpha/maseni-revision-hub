@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class AdminPage extends StatelessWidget {
+  final adminEmail = "youradmin@email.com";
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection("materials").snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return CircularProgressIndicator();
+
+        var docs = snapshot.data!.docs;
+
+        return ListView(
+          children: docs.map((doc) {
+            var d = doc.data();
+
+            if (d["status"] != "pending") return SizedBox();
+
+            return ListTile(
+              title: Text(d["title"]),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.check),
+                    onPressed: () {
+                      doc.reference.update({"status": "approved"});
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      doc.reference.update({"status": "rejected"});
+                    },
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
