@@ -1,0 +1,24 @@
+StreamBuilder(
+  stream: FirebaseFirestore.instance
+    .collection("materials")
+    .where("course", isEqualTo: selectedCourse)
+    .where("year", isEqualTo: selectedYear)
+    .where("status", isEqualTo: "approved")
+    .snapshots(),
+
+  builder: (context, snapshot) {
+    if (!snapshot.hasData) return CircularProgressIndicator();
+
+    return ListView(
+      children: snapshot.data!.docs.map((doc) {
+        final d = doc.data();
+        return MaterialCard(
+          title: d["title"],
+          course: d["course"],
+          year: d["year"],
+          url: d["url"],
+        );
+      }).toList(),
+    );
+  },
+)
