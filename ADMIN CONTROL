@@ -1,0 +1,5 @@
+if (user.email == ADMIN_EMAIL)
+  BottomNavigationBarItem(
+    icon: Icon(Icons.admin_panel_settings),
+    label: "Admin",
+  )
